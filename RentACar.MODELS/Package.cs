@@ -11,17 +11,16 @@ namespace RentACar.MODELS
 
         public double Price { get; set; }
 
-        public long Km_Limit { get; set; }
+        public double Km_Limit { get; set; }
 
         [ForeignKey("Desktop")]
-        public Guid Desktop_Id_Start { get; set; }
+        public Guid Desktop_Start_Id { get; set; }
 
         public Desktop Desktop_Start { get; set; }
 
         [ForeignKey("Desktop")]
-        public Guid Desktop_Id_End { get; set; }
+        public Guid Desktop_End_Id { get; set; }
 
         public Desktop Desktop_End { get; set; }
-
     }
 }

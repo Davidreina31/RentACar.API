@@ -9,6 +9,10 @@ namespace RentACar.MODELS
         [Key]
         public Guid Car_Id { get; set; }
 
+        public string Brand { get; set; }
+
+        public string Model { get; set; }
+
         public string Type { get; set; }
 
         public long Km_Start { get; set; }

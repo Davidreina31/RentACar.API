@@ -21,13 +21,13 @@ namespace RentACar.MODELS
         public Car Car { get; set; }
 
         [ForeignKey("Desktop")]
-        public Guid Desktop_Id_Start { get; set; }
+        public Guid Desktop_Start_Id { get; set; }
 
         public Desktop Desktop_Start { get; set; }
 
         [ForeignKey("Desktop")]
-        public Guid Desktop_Id_End { get; set; }
+        public Guid? Desktop_End_Id { get; set; }
 
-        public Desktop Desktop_End { get; set; }
+        public Desktop? Desktop_End { get; set; }
     }
 }
