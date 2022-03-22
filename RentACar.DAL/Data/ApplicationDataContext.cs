@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using RentACar.MODELS;
 
 namespace RentACar.DAL.Data
 {
@@ -18,6 +19,10 @@ namespace RentACar.DAL.Data
             options.UseSqlServer("Server=localhost;Database=RentACar;User Id=SA;Password=P@ssword1;");
         }
 
-
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Desktop> Desktops { get; set; }
+        public DbSet<Package> Packages { get; set; }
+        public DbSet<Trip> Trips { get; set; }
     }
 }
