@@ -24,6 +24,6 @@ namespace RentACar.DAL.Data
         public DbSet<Desktop> Desktops { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<Trip> Trips { get; set; }
-        //fff
+      
     }
 }
