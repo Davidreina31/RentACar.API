@@ -31,6 +31,9 @@ namespace RentACar.DAL.Migrations
                     b.Property<Guid>("Desktop_Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("Km_End")
                         .HasColumnType("bigint");
 

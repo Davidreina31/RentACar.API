@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.MODELS", "..\RentA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.DAL", "..\RentACar.DAL\RentACar.DAL.csproj", "{FEEBB1A1-D0D9-4474-8918-BFBE60EB7439}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.BLL", "RentACar.BLL\RentACar.BLL.csproj", "{B706A5AE-6BA3-4175-B997-A3F05DB99C30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FEEBB1A1-D0D9-4474-8918-BFBE60EB7439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEEBB1A1-D0D9-4474-8918-BFBE60EB7439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEEBB1A1-D0D9-4474-8918-BFBE60EB7439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B706A5AE-6BA3-4175-B997-A3F05DB99C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B706A5AE-6BA3-4175-B997-A3F05DB99C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B706A5AE-6BA3-4175-B997-A3F05DB99C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B706A5AE-6BA3-4175-B997-A3F05DB99C30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
