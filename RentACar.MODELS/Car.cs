@@ -19,6 +19,8 @@ namespace RentACar.MODELS
 
         public long Km_End { get; set; }
 
+        public string ImageUrl { get; set; }
+
         [ForeignKey("Desktop")]
         public Guid Desktop_Id { get; set; }
 
