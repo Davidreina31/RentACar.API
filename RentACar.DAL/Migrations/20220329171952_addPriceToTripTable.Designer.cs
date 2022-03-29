@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACar.DAL.Data;
 
 namespace RentACar.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220329171952_addPriceToTripTable")]
+    partial class addPriceToTripTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,17 +154,8 @@ namespace RentACar.DAL.Migrations
                     b.Property<Guid>("Desktop_Start_Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Discount")
-                        .HasColumnType("float");
-
                     b.Property<bool>("IsPackage")
                         .HasColumnType("bit");
-
-                    b.Property<Guid?>("Package_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("Penalty")
-                        .HasColumnType("float");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -174,8 +167,6 @@ namespace RentACar.DAL.Migrations
                     b.HasIndex("Desktop_EndDesktop_Id");
 
                     b.HasIndex("Desktop_StartDesktop_Id");
-
-                    b.HasIndex("Package_Id");
 
                     b.ToTable("Trips");
                 });
@@ -233,17 +224,11 @@ namespace RentACar.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("Desktop_StartDesktop_Id");
 
-                    b.HasOne("RentACar.MODELS.Package", "Package")
-                        .WithMany()
-                        .HasForeignKey("Package_Id");
-
                     b.Navigation("Car");
 
                     b.Navigation("Desktop_End");
 
                     b.Navigation("Desktop_Start");
-
-                    b.Navigation("Package");
                 });
 
             modelBuilder.Entity("RentACar.MODELS.Desktop", b =>

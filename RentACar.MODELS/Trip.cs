@@ -15,6 +15,12 @@ namespace RentACar.MODELS
 
         public bool IsPackage { get; set; }
 
+        public double Price { get; set; }
+
+        public double Discount { get; set; }
+
+        public double Penalty { get; set; }
+
         [ForeignKey("Car")]
         public Guid Car_Id { get; set; }
 
@@ -29,5 +35,10 @@ namespace RentACar.MODELS
         public Guid? Desktop_End_Id { get; set; }
 
         public Desktop? Desktop_End { get; set; }
+
+        [ForeignKey("Package")]
+        public Guid? Package_Id { get; set; }
+
+        public Package? Package { get; set; }
     }
 }

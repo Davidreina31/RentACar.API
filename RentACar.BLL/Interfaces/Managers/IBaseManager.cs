@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.BLL.Interfaces.Managers
 {
-    public interface IBaseManager<T>
+    public interface IBaseManager <T>
     {
         Task<IEnumerable<T>> GetAll();
 

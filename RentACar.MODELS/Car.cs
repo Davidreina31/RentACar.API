@@ -15,9 +15,11 @@ namespace RentACar.MODELS
 
         public string Type { get; set; }
 
+        public double Price { get; set; }
+
         public long Km_Start { get; set; }
 
-        public long Km_End { get; set; }
+        public long? Km_End { get; set; }
 
         public string ImageUrl { get; set; }
 
