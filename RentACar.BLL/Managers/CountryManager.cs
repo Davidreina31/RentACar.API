@@ -16,29 +16,29 @@ namespace RentACar.BLL.Managers
             _currentRepository = repository;
         }
 
-        public Task<Country> Add(Country ItemToAdd)
+        public async Task<Country> Add(Country ItemToAdd)
         {
-            return _currentRepository.Add(ItemToAdd);
+            return await _currentRepository.Add(ItemToAdd);
         }
 
-        public Task<Country> Delete(Guid id)
+        public async Task<Country> Delete(Guid id)
         {
-            return _currentRepository.Delete(id);
+            return await _currentRepository.Delete(id);
         }
 
-        public Task<IEnumerable<Country>> GetAll()
+        public async Task<IEnumerable<Country>> GetAll()
         {
-            return _currentRepository.GetAll();
+            return await _currentRepository.GetAll();
         }
 
-        public Task<Country> GetById(Guid id)
+        public async Task<Country> GetById(Guid id)
         {
-            return _currentRepository.GetById(id);
+            return await _currentRepository.GetById(id);
         }
 
-        public Task<Country> Update(Country ItemToUpdate)
+        public async Task<Country> Update(Country ItemToUpdate)
         {
-            return _currentRepository.Update(ItemToUpdate);
+            return await _currentRepository.Update(ItemToUpdate);
         }
     }
 }

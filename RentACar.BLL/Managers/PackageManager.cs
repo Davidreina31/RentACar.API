@@ -16,29 +16,29 @@ namespace RentACar.BLL.Managers
             _currentRepository = repository;
         }
 
-        public Task<Package> Add(Package ItemToAdd)
+        public async Task<Package> Add(Package ItemToAdd)
         {
-            return _currentRepository.Add(ItemToAdd);
+            return await _currentRepository.Add(ItemToAdd);
         }
 
-        public Task<Package> Delete(Guid id)
+        public async Task<Package> Delete(Guid id)
         {
-            return _currentRepository.Delete(id);
+            return await _currentRepository.Delete(id);
         }
 
-        public Task<IEnumerable<Package>> GetAll()
+        public async Task<IEnumerable<Package>> GetAll()
         {
-            return _currentRepository.GetAll();
+            return await _currentRepository.GetAll();
         }
 
-        public Task<Package> GetById(Guid id)
+        public async Task<Package> GetById(Guid id)
         {
-            return _currentRepository.GetById(id);
+            return await _currentRepository.GetById(id);
         }
 
-        public Task<Package> Update(Package ItemToUpdate)
+        public async Task<Package> Update(Package ItemToUpdate)
         {
-            return _currentRepository.Update(ItemToUpdate);
+            return await _currentRepository.Update(ItemToUpdate);
         }
     }
 }
