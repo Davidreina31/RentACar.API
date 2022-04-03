@@ -73,7 +73,7 @@ namespace RentACar.BLL.Managers
                     + (priceAfterKm * ItemToAdd.Penalty));
             }
 
-
+            ItemToAdd.Car.IsAvailable = false;
 
             return await _currentRepository.Add(ItemToAdd);
         }
@@ -83,14 +83,14 @@ namespace RentACar.BLL.Managers
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Trip>> GetAll()
+        public async Task<IEnumerable<Trip>> GetAll()
         {
-            return _currentRepository.GetAll();
+            return await _currentRepository.GetAll();
         }
 
-        public Task<Trip> GetById(Guid id)
+        public async Task<Trip> GetById(Guid id)
         {
-            return _currentRepository.GetById(id);
+            return await _currentRepository.GetById(id);
         }
 
         public Task<Trip> Update(Trip ItemToUpdate)

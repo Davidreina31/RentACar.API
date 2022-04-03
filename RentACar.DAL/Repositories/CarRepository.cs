@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RentACar.DAL.Data;
@@ -36,7 +37,10 @@ namespace RentACar.DAL.Repositories
 
         public async Task<IEnumerable<Car>> GetAll()
         {
-            return await _context.Cars.ToListAsync();
+            var carsToReturn = await _context.Cars.ToListAsync();
+            carsToReturn.Where(item => item.IsAvailable == true);
+
+            return carsToReturn;
         }
 
         public async Task<Car> GetById(Guid id)

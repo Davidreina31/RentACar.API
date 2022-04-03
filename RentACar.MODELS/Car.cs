@@ -17,6 +17,8 @@ namespace RentACar.MODELS
 
         public double Price { get; set; }
 
+        public bool IsAvailable { get; set; }
+
         public long Km_Start { get; set; }
 
         public long? Km_End { get; set; }

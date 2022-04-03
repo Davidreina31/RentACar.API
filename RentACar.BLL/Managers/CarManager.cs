@@ -10,35 +10,57 @@ namespace RentACar.BLL.Managers
     public class CarManager : ICarManager
     {
         private readonly ICarRepository _currentReporitory;
+        private readonly ITripRepository _tripRepository;
 
         public CarManager(ICarRepository repository)
         {
             _currentReporitory = repository;
         }
 
-        public Task<Car> Add(Car ItemToAdd)
+        public async Task<Car> Add(Car ItemToAdd)
         {
-            return _currentReporitory.Add(ItemToAdd);
+            return await _currentReporitory.Add(ItemToAdd);
         }
 
-        public Task<Car> Delete(Guid id)
+        public async Task<Car> Delete(Guid id)
         {
-            return _currentReporitory.Delete(id);
+            return await _currentReporitory.Delete(id);
         }
 
-        public Task<IEnumerable<Car>> GetAll()
+        public async Task<IEnumerable<Car>> GetAll()
         {
-            return _currentReporitory.GetAll();
+            await IsCarOnATrip();
+            return await _currentReporitory.GetAll();
         }
 
-        public Task<Car> GetById(Guid id)
+        public async Task<Car> GetById(Guid id)
         {
-            return _currentReporitory.GetById(id);
+            return await _currentReporitory.GetById(id);
         }
 
-        public Task<Car> Update(Car ItemToUpdate)
+        public async Task<Car> Update(Car ItemToUpdate)
         {
-            return _currentReporitory.Update(ItemToUpdate);
+            return await _currentReporitory.Update(ItemToUpdate);
+        }
+
+        public async Task<bool> IsCarOnATrip()
+        {
+            var cars = await _currentReporitory.GetAll();
+            var trips = await _tripRepository.GetAll();
+
+            foreach (var car in cars)
+            {
+                foreach (var trip in trips)
+                {
+                    if(trip.Car_Id == car.Car_Id && DateTime.Now > trip.Date_Start && DateTime.Now < trip.Date_End)
+                    {
+                        car.IsAvailable = false;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

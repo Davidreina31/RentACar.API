@@ -11,7 +11,7 @@ namespace RentACar.DAL.Migrations
                 table: "Cars",
                 type: "bit",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -34,6 +34,9 @@ namespace RentACar.DAL.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
                     b.Property<long?>("Km_End")
                         .HasColumnType("bigint");
 
