@@ -9,6 +9,12 @@ namespace RentACar.MODELS
         [Key]
         public Guid Trip_Id { get; set; }
 
+        public string Client_FirstName { get; set; }
+
+        public string Client_LastName { get; set; }
+
+        public string Client_Email { get; set; }
+
         public DateTime Date_Start { get; set; }
 
         public DateTime Date_End { get; set; }

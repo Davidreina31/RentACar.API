@@ -73,8 +73,6 @@ namespace RentACar.BLL.Managers
                     + (priceAfterKm * ItemToAdd.Penalty));
             }
 
-            ItemToAdd.Car.IsAvailable = false;
-
             return await _currentRepository.Add(ItemToAdd);
         }
 
