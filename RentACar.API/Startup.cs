@@ -16,6 +16,8 @@ using RentACar.BLL.Managers;
 using RentACar.DAL.Data;
 using RentACar.DAL.Interfaces.Repositories;
 using RentACar.DAL.Repositories;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace RentACar.API
 {
@@ -32,7 +34,10 @@ namespace RentACar.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(x =>
+                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
+
 
             services.AddDbContext<ApplicationDataContext>(options =>
             options.UseSqlServer(

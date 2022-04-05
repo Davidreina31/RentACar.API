@@ -36,14 +36,14 @@ namespace RentACar.DAL.Repositories
 
         public async Task<IEnumerable<Desktop>> GetAll()
         {
-            var desktopList = await _context.Desktops.Include(item => item.Cars).ToListAsync();
+            var desktopList = await _context.Desktops.Include(item => item.Cars).Include(item => item.Country).ToListAsync();
 
             return desktopList;
         }
 
         public async Task<Desktop> GetById(Guid id)
         {
-            var result = await _context.Desktops.FirstOrDefaultAsync(item => item.Desktop_Id == id);
+            var result = await _context.Desktops.Include(item => item.Country).FirstOrDefaultAsync(item => item.Desktop_Id == id);
 
             return result;
         }

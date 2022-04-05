@@ -37,8 +37,7 @@ namespace RentACar.DAL.Repositories
 
         public async Task<IEnumerable<Car>> GetAll()
         {
-            var carsToReturn = await _context.Cars.ToListAsync();
-            return carsToReturn.Where(item => item.IsAvailable == true);
+            return await _context.Cars.ToListAsync();
         }
 
         public async Task<Car> GetById(Guid id)
