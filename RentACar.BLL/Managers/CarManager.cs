@@ -12,9 +12,10 @@ namespace RentACar.BLL.Managers
         private readonly ICarRepository _currentReporitory;
         private readonly ITripRepository _tripRepository;
 
-        public CarManager(ICarRepository repository)
+        public CarManager(ICarRepository repository, ITripRepository tripRepository)
         {
             _currentReporitory = repository;
+            _tripRepository = tripRepository;
         }
 
         public async Task<Car> Add(Car ItemToAdd)
@@ -42,19 +43,23 @@ namespace RentACar.BLL.Managers
             return await _currentReporitory.Update(ItemToUpdate);
         }
 
-        public async Task<bool> IsCarOnATrip(Guid id)
+        public async Task<bool> IsCarOnATrip(Guid id, DateTime dateStart, DateTime dateEnd)
         {
             var car = await _currentReporitory.GetById(id);
+            var trips = await _tripRepository.GetAll();
 
-            if (car.IsAvailable)
+            foreach (var trip in trips)
             {
-                return false;
+                if(trip.Car_Id == id)
+                {
+                    if((dateStart > trip.Date_Start && dateStart < trip.Date_End) || (dateEnd > trip.Date_Start && dateEnd < trip.Date_End))
+                    {
+                        return true;
+                    }
+                }
             }
 
-            else
-            {
-                return true;
-            }
+            return false;
         }
     }
 }

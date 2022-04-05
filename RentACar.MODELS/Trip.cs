@@ -27,6 +27,8 @@ namespace RentACar.MODELS
 
         public double Penalty { get; set; }
 
+        public bool IsTripDone { get; set; }
+
         [ForeignKey("Car")]
         public Guid Car_Id { get; set; }
 

@@ -36,19 +36,19 @@ namespace RentACar.DAL.Repositories
 
         public async Task<IEnumerable<Trip>> GetAll()
         {
-            return await _context.Trips.ToListAsync();
+            return await _context.Trips.Include(item => item.Package).Include(item => item.Car).ToListAsync();
         }
 
         public async Task<Trip> GetById(Guid id)
         {
-            var result = await _context.Trips.FirstOrDefaultAsync(item => item.Trip_Id == id);
+            var result = await _context.Trips.Include(item => item.Package).Include(item => item.Car).FirstOrDefaultAsync(item => item.Trip_Id == id);
 
             return result;
         }
 
         public async Task<Trip> Update(Trip ItemToUpdate)
         {
-            var result = await _context.Trips.FirstOrDefaultAsync(item => item.Trip_Id == ItemToUpdate.Trip_Id);
+            var result = await _context.Trips.Include(item => item.Package).Include(item => item.Car).AsNoTracking().FirstOrDefaultAsync(item => item.Trip_Id == ItemToUpdate.Trip_Id);
             _context.Trips.Update(ItemToUpdate);
             await _context.SaveChangesAsync();
 

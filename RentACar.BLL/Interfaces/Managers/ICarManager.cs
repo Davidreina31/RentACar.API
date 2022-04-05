@@ -6,6 +6,6 @@ namespace RentACar.BLL.Interfaces.Managers
 {
     public interface ICarManager : IBaseManager<Car>
     {
-        Task<bool> IsCarOnATrip(Guid id);
+        Task<bool> IsCarOnATrip(Guid id, DateTime dateStart, DateTime dateEnd);
     }
 }

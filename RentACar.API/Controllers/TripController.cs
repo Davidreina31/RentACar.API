@@ -47,7 +47,7 @@ namespace RentACar.API.Controllers
         {
             if (id != trip.Trip_Id)
                 return BadRequest();
-            return Ok(await _currentManager.Update(trip));
+            return Ok(await _currentManager.FinishTrip(trip));
         }
 
         // DELETE api/values/5
