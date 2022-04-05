@@ -29,7 +29,6 @@ namespace RentACar.BLL.Managers
 
         public async Task<IEnumerable<Car>> GetAll()
         {
-            await IsCarOnATrip();
             return await _currentReporitory.GetAll();
         }
 
@@ -43,24 +42,19 @@ namespace RentACar.BLL.Managers
             return await _currentReporitory.Update(ItemToUpdate);
         }
 
-        public async Task<bool> IsCarOnATrip()
+        public async Task<bool> IsCarOnATrip(Guid id)
         {
-            var cars = await _currentReporitory.GetAll();
-            var trips = await _tripRepository.GetAll();
+            var car = await _currentReporitory.GetById(id);
 
-            foreach (var car in cars)
+            if (car.IsAvailable)
             {
-                foreach (var trip in trips)
-                {
-                    if(trip.Car_Id == car.Car_Id && DateTime.Now > trip.Date_Start && DateTime.Now < trip.Date_End)
-                    {
-                        car.IsAvailable = false;
-                        return true;
-                    }
-                }
+                return false;
             }
 
-            return false;
+            else
+            {
+                return true;
+            }
         }
     }
 }
