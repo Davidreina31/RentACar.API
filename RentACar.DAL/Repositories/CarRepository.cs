@@ -37,7 +37,7 @@ namespace RentACar.DAL.Repositories
 
         public async Task<IEnumerable<Car>> GetAll()
         {
-            return await _context.Cars.ToListAsync();
+            return await _context.Cars.Include(item => item.Desktop).ToListAsync();
         }
 
         public async Task<Car> GetById(Guid id)
