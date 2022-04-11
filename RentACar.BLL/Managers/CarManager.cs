@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using RentACar.BLL.Interfaces.Managers;
 using RentACar.DAL.Interfaces.Repositories;
 using RentACar.MODELS;
+using System.Linq;
 
 namespace RentACar.BLL.Managers
 {
@@ -52,7 +53,7 @@ namespace RentACar.BLL.Managers
             {
                 if(trip.Car_Id == id)
                 {
-                    if((dateStart > trip.Date_Start && dateStart < trip.Date_End) || (dateEnd > trip.Date_Start && dateEnd < trip.Date_End))
+                    if((dateStart >= trip.Date_Start && dateStart <= trip.Date_End) || (dateEnd >= trip.Date_Start && dateEnd <= trip.Date_End))
                     {
                         return true;
                     }
@@ -60,6 +61,13 @@ namespace RentACar.BLL.Managers
             }
 
             return false;
+        }
+
+        public async Task<IEnumerable<Car>> GetAllCarsForDesktop(Guid id)
+        {
+            var allCars = await _currentReporitory.GetAll();
+
+            return allCars.Where(item => item.Desktop_Id == id);
         }
     }
 }

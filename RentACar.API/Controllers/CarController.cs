@@ -22,9 +22,9 @@ namespace RentACar.API.Controllers
 
         // GET: api/values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Car>>> Get()
+        public async Task<ActionResult<IEnumerable<Car>>> GetAllCarsForDesktop(Guid id)
         {
-            return Ok(await _currentManager.GetAll());
+            return Ok(await _currentManager.GetAllCarsForDesktop(id));
         }
 
         // GET api/values/5

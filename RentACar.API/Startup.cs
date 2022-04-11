@@ -36,8 +36,6 @@ namespace RentACar.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            //services.AddControllers().AddJsonOptions(x =>
-            //     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
