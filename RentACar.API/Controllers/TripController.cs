@@ -38,7 +38,14 @@ namespace RentACar.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Trip>> Post([FromBody] Trip trip)
         {
-            return Ok(await _currentManager.Add(trip));
+            try
+            {
+                return Ok(await _currentManager.Add(trip));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT api/values/5

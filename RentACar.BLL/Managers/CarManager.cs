@@ -5,6 +5,7 @@ using RentACar.BLL.Interfaces.Managers;
 using RentACar.DAL.Interfaces.Repositories;
 using RentACar.MODELS;
 using System.Linq;
+using RentACar.ERRORS;
 
 namespace RentACar.BLL.Managers
 {
@@ -46,16 +47,19 @@ namespace RentACar.BLL.Managers
 
         public async Task<bool> IsCarOnATrip(Guid id, DateTime dateStart, DateTime dateEnd)
         {
+            dateStart = dateStart.AddDays(1);
+            dateEnd = dateEnd.AddDays(1);
             var car = await _currentReporitory.GetById(id);
             var trips = await _tripRepository.GetAll();
 
             foreach (var trip in trips)
             {
-                if(trip.Car_Id == id)
+                if (trip.Car_Id == id)
                 {
-                    if((dateStart >= trip.Date_Start && dateStart <= trip.Date_End) || (dateEnd >= trip.Date_Start && dateEnd <= trip.Date_End))
+                    if ((dateStart >= trip.Date_Start && dateStart <= trip.Date_End) || (dateEnd >= trip.Date_Start && dateEnd <= trip.Date_End))
                     {
-                        return true;
+                        throw new DatesAlreadyTakenException("La voiture est déjà prise à ces dates là. Cette voiture est réservée du " +
+                            trip.Date_Start.ToShortDateString() + " au " + trip.Date_End.ToShortDateString() + ".");
                     }
                 }
             }

@@ -19,6 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RentACar.DAL\RentACar.DAL.csproj" />
+    <ProjectReference Include="..\RentACar.ERRORS\RentACar.ERRORS.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using RentACar.BLL.Interfaces.Managers;
 using RentACar.DAL.Interfaces.Repositories;
 using RentACar.MODELS;
+using RentACar.ERRORS;
 
 namespace RentACar.BLL.Managers
 {
@@ -24,6 +25,13 @@ namespace RentACar.BLL.Managers
 
         public async Task<Trip> Add(Trip ItemToAdd)
         {
+            ItemToAdd.Date_Start = ItemToAdd.Date_Start.AddDays(1);
+            ItemToAdd.Date_End = ItemToAdd.Date_End.AddDays(1);
+
+            if(ItemToAdd.Date_Start < DateTime.Today)
+            {
+                throw new DatesBeforeTodayException("Les dates sélectionnées sont déjà passées.");
+            }
 
             if (!await _carManager.IsCarOnATrip(ItemToAdd.Car_Id, ItemToAdd.Date_Start, ItemToAdd.Date_End))
             {
@@ -46,7 +54,7 @@ namespace RentACar.BLL.Managers
                 }
 
                 #region disount and penalty
-                var diffOfDates = ItemToAdd.Date_Start - DateTime.Now;
+                var diffOfDates = ItemToAdd.Date_Start - DateTime.Today;
 
                 if (diffOfDates.Days >= 7 && diffOfDates.Days < 14)
                 {
@@ -129,6 +137,8 @@ namespace RentACar.BLL.Managers
             }
 
             ItemToUpdate.IsTripDone = true;
+
+            ItemToUpdate.Car.Km_End = null;
 
             return await _currentRepository.Update(ItemToUpdate);
         }
