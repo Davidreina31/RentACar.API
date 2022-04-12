@@ -61,7 +61,7 @@ namespace RentACar.DAL.Repositories
 
         public async Task<Package> GetById(Guid id)
         {
-            var result = await _context.Packages.FirstOrDefaultAsync(item => item.Package_Id == id);
+            var result = await _context.Packages.Include(item =>item.Desktop_Start).Include(item => item.Desktop_End).FirstOrDefaultAsync(item => item.Package_Id == id);
             return result;
         }
 

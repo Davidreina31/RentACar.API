@@ -86,11 +86,15 @@ namespace RentACar.BLL.Managers
                         - (ItemToAdd.Package.Price * ItemToAdd.Discount) + (ItemToAdd.Package.Price * ItemToAdd.Penalty);
                 }
 
+                if (!ItemToAdd.IsPackage)
+                {
+                    ItemToAdd.Price += ItemToAdd.Car.Price - (ItemToAdd.Car.Price * ItemToAdd.Discount) + (ItemToAdd.Car.Price * ItemToAdd.Penalty);
+                }
+
                 return await _currentRepository.Add(ItemToAdd);
             }
 
             return ItemToAdd;
-
         }
 
         public async Task<Trip> Delete(Guid id)
