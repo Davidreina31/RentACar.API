@@ -11,10 +11,12 @@ namespace RentACar.DAL.Repositories
     public class PackageRepository : IPackageRepository
     {
         private readonly ApplicationDataContext _context;
+        private readonly IDesktopRepository _desktopRepository;
 
-        public PackageRepository(ApplicationDataContext context)
+        public PackageRepository(ApplicationDataContext context, IDesktopRepository desktopRepository)
         {
             _context = context;
+            _desktopRepository = desktopRepository;
         }
 
         public async Task<Package> Add(Package ItemToAdd)
@@ -36,13 +38,30 @@ namespace RentACar.DAL.Repositories
 
         public async Task<IEnumerable<Package>> GetAll()
         {
-            return await _context.Packages.ToListAsync();
+            var packages = await _context.Packages.ToListAsync();
+            var allDesktops = await _desktopRepository.GetAll();
+
+            foreach (var package in packages)
+            {
+                foreach (var desktop in allDesktops)
+                {
+                    if(package.Desktop_Start_Id == desktop.Desktop_Id)
+                    {
+                        package.Desktop_Start = desktop;
+                    }
+                    if(package.Desktop_End_Id == desktop.Desktop_Id)
+                    {
+                        package.Desktop_End = desktop;
+                    }
+                }
+            }
+
+            return packages;
         }
 
         public async Task<Package> GetById(Guid id)
         {
             var result = await _context.Packages.FirstOrDefaultAsync(item => item.Package_Id == id);
-
             return result;
         }
 

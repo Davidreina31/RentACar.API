@@ -12,6 +12,8 @@ namespace RentACar.MODELS
 
         public string City { get; set; }
 
+        public string ImageUrl { get; set; }
+
         [ForeignKey("Country")]
         public Guid Country_Id { get; set; }
 
