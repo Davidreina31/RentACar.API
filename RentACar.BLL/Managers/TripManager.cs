@@ -87,6 +87,14 @@ namespace RentACar.BLL.Managers
                 }
                 #endregion
 
+                if(ItemToAdd.Date_Start.Month >= 6 && ItemToAdd.Date_Start.Month <= 9)
+                {
+                    if(ItemToAdd.Date_End.Month >= 6 && ItemToAdd.Date_End.Month <= 9)
+                    {
+                        ItemToAdd.Car.Price = ItemToAdd.Car.Price / 3;
+                    }
+                }
+
                 if (ItemToAdd.IsPackage)
                 {
                     ItemToAdd.Price += (ItemToAdd.Car.Price * numberOfDays.Days) + ItemToAdd.Package.Price
