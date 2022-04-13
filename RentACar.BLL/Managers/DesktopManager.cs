@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RentACar.BLL.Interfaces.Managers;
 using RentACar.DAL.Interfaces.Repositories;
+using RentACar.ERRORS;
 using RentACar.MODELS;
 
 namespace RentACar.BLL.Managers
@@ -18,6 +19,16 @@ namespace RentACar.BLL.Managers
 
         public async Task<Desktop> Add(Desktop ItemToAdd)
         {
+            var desktops = await _currentRepository.GetAll();
+
+            foreach (var item in desktops)
+            {
+                if(item.City.ToLower() == ItemToAdd.City.ToLower())
+                {
+                    throw new CityAlreadyExistsException("Ce dépôt existe déjà.");
+                }
+            }
+
             return await _currentRepository.Add(ItemToAdd);
         }
 

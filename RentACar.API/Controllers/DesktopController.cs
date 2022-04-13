@@ -37,7 +37,14 @@ namespace RentACar.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Desktop>> Post([FromBody] Desktop desktop)
         {
-            return Ok(await _currentManager.Add(desktop));
+            try
+            {
+                return Ok(await _currentManager.Add(desktop));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT api/values/5

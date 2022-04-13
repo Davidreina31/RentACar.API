@@ -54,7 +54,15 @@ namespace RentACar.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Car>> Delete([FromRoute] Guid id)
         {
-            return Ok(await _currentManager.Delete(id));
+            try
+            {
+                return Ok(await _currentManager.Delete(id));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }

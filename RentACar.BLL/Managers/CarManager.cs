@@ -27,6 +27,17 @@ namespace RentACar.BLL.Managers
 
         public async Task<Car> Delete(Guid id)
         {
+            var trips = await _tripRepository.GetAll();
+
+            foreach (var item in trips)
+            {
+                if(item.Car_Id == id)
+                {
+                    throw new CarIsOnATripException("Cette voiture ne peut pas être supprimée" +
+                        " car elle est ou a été sous réservation.");
+                }
+            }
+
             return await _currentReporitory.Delete(id);
         }
 

@@ -52,9 +52,17 @@ namespace RentACar.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Trip>> Put([FromRoute] Guid id, [FromBody] Trip trip)
         {
-            if (id != trip.Trip_Id)
-                return BadRequest();
-            return Ok(await _currentManager.FinishTrip(trip));
+            try
+            {
+                if (id != trip.Trip_Id)
+                    return BadRequest();
+                return Ok(await _currentManager.FinishTrip(trip));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         // DELETE api/values/5

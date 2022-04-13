@@ -28,6 +28,8 @@ namespace RentACar.BLL.Managers
             ItemToAdd.Date_Start = ItemToAdd.Date_Start.AddDays(1);
             ItemToAdd.Date_End = ItemToAdd.Date_End.AddDays(1);
 
+            var numberOfDays = ItemToAdd.Date_End - ItemToAdd.Date_Start;
+
             if(ItemToAdd.Date_Start < DateTime.Today)
             {
                 throw new DatesBeforeTodayException("Les dates sélectionnées sont déjà passées.");
@@ -69,7 +71,7 @@ namespace RentACar.BLL.Managers
                 {
                     ItemToAdd.Discount = 0.15;
                 }
-                if (diffOfDates.Days >= 28 && diffOfDates.Days < 35)
+                if (diffOfDates.Days >= 28)
                 {
                     ItemToAdd.Discount = 0.20;
                 }
@@ -78,17 +80,22 @@ namespace RentACar.BLL.Managers
                 {
                     ItemToAdd.Penalty = 0.10;
                 }
+
+                if(ItemToAdd.Desktop_End_Id != null)
+                {
+                    ItemToAdd.Discount += 0.05;
+                }
                 #endregion
 
                 if (ItemToAdd.IsPackage)
                 {
-                    ItemToAdd.Price += ItemToAdd.Car.Price + ItemToAdd.Package.Price
+                    ItemToAdd.Price += (ItemToAdd.Car.Price * numberOfDays.Days) + ItemToAdd.Package.Price
                         - (ItemToAdd.Package.Price * ItemToAdd.Discount) + (ItemToAdd.Package.Price * ItemToAdd.Penalty);
                 }
 
                 if (!ItemToAdd.IsPackage)
                 {
-                    ItemToAdd.Price += ItemToAdd.Car.Price - (ItemToAdd.Car.Price * ItemToAdd.Discount) + (ItemToAdd.Car.Price * ItemToAdd.Penalty);
+                    ItemToAdd.Price += (ItemToAdd.Car.Price * numberOfDays.Days) - (ItemToAdd.Car.Price * ItemToAdd.Discount) + (ItemToAdd.Car.Price * ItemToAdd.Penalty);
                 }
 
                 return await _currentRepository.Add(ItemToAdd);
@@ -114,6 +121,12 @@ namespace RentACar.BLL.Managers
 
         public async Task<Trip> FinishTrip(Trip ItemToUpdate)
         {
+            if(ItemToUpdate.Car.Km_End <= ItemToUpdate.Car.Km_Start)
+            {
+                throw new KmEndLowerThanKmStartException("Le kilométrage actuel de la voiture ne peut pas être " +
+                    "plus petit que son kilométrage de base.");
+            }
+
             var desktopStart = await _desktopRepository.GetById(ItemToUpdate.Desktop_Start_Id);
             ItemToUpdate.Desktop_Start = desktopStart;
 
@@ -136,8 +149,7 @@ namespace RentACar.BLL.Managers
                 double kmDone = (double)(ItemToUpdate.Car.Km_End - ItemToUpdate.Car.Km_Start);
                 double priceAfterKm = ItemToUpdate.Desktop_Start.Country.Km_Price * kmDone;
 
-                ItemToUpdate.Price = (double)(ItemToUpdate.Car.Price + priceAfterKm - (priceAfterKm * ItemToUpdate.Discount)
-                    + (priceAfterKm * ItemToUpdate.Penalty));
+                ItemToUpdate.Price += priceAfterKm;
             }
 
             ItemToUpdate.IsTripDone = true;
