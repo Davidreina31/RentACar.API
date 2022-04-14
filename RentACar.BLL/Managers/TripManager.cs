@@ -87,13 +87,7 @@ namespace RentACar.BLL.Managers
                 }
                 #endregion
 
-                if(ItemToAdd.Date_Start.Month >= 6 && ItemToAdd.Date_Start.Month <= 9)
-                {
-                    if(ItemToAdd.Date_End.Month >= 6 && ItemToAdd.Date_End.Month <= 9)
-                    {
-                        ItemToAdd.Car.Price = ItemToAdd.Car.Price / 3;
-                    }
-                }
+                
 
                 if (ItemToAdd.IsPackage)
                 {
@@ -104,6 +98,14 @@ namespace RentACar.BLL.Managers
                 if (!ItemToAdd.IsPackage)
                 {
                     ItemToAdd.Price += (ItemToAdd.Car.Price * numberOfDays.Days) - (ItemToAdd.Car.Price * ItemToAdd.Discount) + (ItemToAdd.Car.Price * ItemToAdd.Penalty);
+                }
+
+                if (ItemToAdd.Date_Start.Month >= 6 && ItemToAdd.Date_Start.Month <= 9)
+                {
+                    if (ItemToAdd.Date_End.Month >= 6 && ItemToAdd.Date_End.Month <= 9)
+                    {
+                        ItemToAdd.Price = ItemToAdd.Price / 3;
+                    }
                 }
 
                 return await _currentRepository.Add(ItemToAdd);
