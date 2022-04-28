@@ -131,6 +131,8 @@ namespace RentACar.BLL.Managers
 
         public async Task<Trip> FinishTrip(Trip ItemToUpdate)
         {
+            long kmDone = 0;
+
             if(ItemToUpdate.Car.Km_End <= ItemToUpdate.Car.Km_Start)
             {
                 throw new KmEndLowerThanKmStartException("Le kilométrage actuel de la voiture ne peut pas être " +
@@ -147,7 +149,7 @@ namespace RentACar.BLL.Managers
 
                 if (ItemToUpdate.Car.Km_End - ItemToUpdate.Car.Km_Start > ItemToUpdate.Package.Km_Limit)
                 {
-                    double kmDone = (double)(ItemToUpdate.Car.Km_End - ItemToUpdate.Car.Km_Start);
+                    kmDone = (long)(ItemToUpdate.Car.Km_End - ItemToUpdate.Car.Km_Start);
                     double kmAboveLimit = kmDone - ItemToUpdate.Package.Km_Limit;
 
                     ItemToUpdate.Price += ItemToUpdate.Desktop_Start.Country.Km_Price * kmAboveLimit;
@@ -156,13 +158,15 @@ namespace RentACar.BLL.Managers
 
             if (!ItemToUpdate.IsPackage)
             {
-                double kmDone = (double)(ItemToUpdate.Car.Km_End - ItemToUpdate.Car.Km_Start);
+                kmDone = (long)(ItemToUpdate.Car.Km_End - ItemToUpdate.Car.Km_Start);
                 double priceAfterKm = ItemToUpdate.Desktop_Start.Country.Km_Price * kmDone;
 
                 ItemToUpdate.Price += priceAfterKm;
             }
 
             ItemToUpdate.IsTripDone = true;
+
+            ItemToUpdate.Car.Km_Start += kmDone;
 
             ItemToUpdate.Car.Km_End = null;
 
